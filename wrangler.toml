@@ -11,7 +11,7 @@ compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
 kv_namespaces = [
-  { binding = "MOBIN_KV", id = "YOUR_KV_NAMESPACE_ID" }
+  { binding = "MOBIN_KV", id = "a13316ab236146feb7c7d62e15239e98" }
 ]
 
 # Optional cron trigger used for automatic WARP account renewal
