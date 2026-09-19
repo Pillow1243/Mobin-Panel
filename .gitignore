@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+worker.js
+*.tsbuildinfo
+
+# Wrangler
+.dev/
+.wrangler/
+
+# Environment & secrets
+.env
+.env.*
+*.local
+auth.json
+
+# Logs & OS noise
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Test artifacts
+coverage/
+.npm/

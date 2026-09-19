@@ -1,0 +1,25 @@
+# Mobin Panel — Cloudflare Worker configuration
+# Created by Mobin.A
+#
+# Replace YOUR_KV_NAMESPACE_ID with the id of your KV namespace
+# (create one with: wrangler kv:namespace create MOBIN_KV)
+
+name = "mobin-panel"
+main = "dist/worker.js"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+kv_namespaces = [
+  { binding = "MOBIN_KV", id = "YOUR_KV_NAMESPACE_ID" }
+]
+
+# Optional cron trigger used for automatic WARP account renewal
+# (only performs work when "Warp → Auto renew" is enabled in the panel).
+[triggers]
+crons = [ "0 6 * * *" ]
+
+# Uncomment to attach a custom domain.
+# [routes]
+# route = "mobin.example.com/*"
+# zone_name = "example.com"

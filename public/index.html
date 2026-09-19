@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--
+  Mobin Panel — main SPA shell
+  Created by Mobin.A
+  A next-generation, open-source Cloudflare Worker configuration panel for
+  VLESS, Trojan and Warp protocols.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="Mobin Panel — next-generation Cloudflare Worker panel for VLESS, Trojan and Warp. Created by Mobin.A" />
+  <meta name="author" content="Mobin.A" />
+  <title>Mobin Panel</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/neon.css" />
+</head>
+<body>
+  <!-- Particle background -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="bg-aurora" aria-hidden="true"></div>
+
+  <!-- ============================ AUTH VIEW ============================ -->
+  <div id="auth-view" class="auth-view hidden">
+    <div class="auth-card glass">
+      <div class="auth-logo">
+        <img src="/assets/images/logo.svg" alt="Mobin Panel logo" />
+      </div>
+      <h1 class="auth-title">MOBIN <span class="neon-text">PANEL</span></h1>
+      <p class="auth-sub" id="auth-subtitle">Next-generation proxy configuration</p>
+
+      <form id="auth-form" class="auth-form" autocomplete="off">
+        <div class="field">
+          <label for="auth-password" id="auth-pw-label">Password</label>
+          <div class="input-wrap">
+            <input type="password" id="auth-password" class="input neon-input" placeholder="••••••••" minlength="8" required />
+            <button type="button" class="icon-btn" id="auth-toggle-pw" title="Show/hide password" tabindex="-1">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <p class="hint" id="auth-pw-hint">Minimum 8 characters.</p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="auth-submit">
+          <span class="btn-label">Unlock Panel</span>
+        </button>
+      </form>
+
+      <div class="auth-error hidden" id="auth-error"></div>
+      <p class="auth-foot">Created by <span class="neon-text">Mobin.A</span> · <span id="auth-version"></span></p>
+    </div>
+  </div>
+
+  <!-- ============================ MAIN VIEW ============================ -->
+  <div id="main-view" class="hidden">
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar glass" id="sidebar">
+        <div class="sidebar-brand">
+          <img src="/assets/images/logo.svg" alt="" class="brand-logo" />
+          <div class="brand-text">
+            <span class="brand-name">MOBIN</span>
+            <span class="brand-sub">PANEL</span>
+          </div>
+        </div>
+        <nav class="sidebar-nav" id="sidebar-nav">
+          <!-- populated by app.js -->
+        </nav>
+        <div class="sidebar-foot">
+          <div class="version-chip" id="version-chip" title="Panel version">v—</div>
+          <button class="icon-btn logout-btn" id="logout-btn" title="Logout">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="content">
+        <header class="topbar glass">
+          <button class="icon-btn menu-btn" id="menu-btn" aria-label="Menu">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="topbar-title" id="page-title">Dashboard</div>
+          <div class="topbar-actions">
+            <span class="save-indicator" id="save-indicator">saved</span>
+            <button class="btn btn-ghost btn-sm" id="save-btn">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save
+            </button>
+          </div>
+        </header>
+        <main class="page" id="page">
+          <!-- pages rendered here -->
+        </main>
+        <footer class="foot">
+          <span>Mobin Panel <span id="foot-version"></span> · Created by <span class="neon-text">Mobin.A</span></span>
+          <span class="foot-links">
+            <a href="https://github.com/Pillow1243/Mobin-Panel" target="_blank" rel="noopener">GitHub</a>
+          </span>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <!-- Modal -->
+  <div id="modal-root" class="modal-root hidden"></div>
+
+  <script src="/assets/js/qr.js"></script>
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/ui.js"></script>
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>
